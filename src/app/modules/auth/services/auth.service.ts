@@ -4,7 +4,7 @@ import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthResponse } from '@auth/interfaces/auth-response.interface';
 import { CreateUser, UpdateUser, User } from '@auth/interfaces/user.interface';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 
