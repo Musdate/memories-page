@@ -34,7 +34,11 @@
               "includePaths": [
                 "src/base"
               ]
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "pdfmake",
+              "sweetalert2"
+            ]
           },
           "configurations": {
             "production": {
