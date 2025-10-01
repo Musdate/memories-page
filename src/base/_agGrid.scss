@@ -1,0 +1,17 @@
+@use 'mixins' as m;
+
+.ag-paging-page-size {
+    display: none !important;
+
+    @include m.phone {
+        display: unset !important;
+    }
+}
+
+.ag-paging-row-summary-panel {
+    display: none !important;
+
+    @include m.tablet {
+        display: unset !important;
+    }
+}

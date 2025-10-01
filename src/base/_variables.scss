@@ -1,0 +1,57 @@
+// * FONTS
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('/assets/fonts/Roboto.woff2') format('woff2'),
+       url('/assets/fonts/Roboto.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+$font: 'Roboto', "Helvetica Neue", sans-serif;
+// $cardoFont: "Cardo", serif;
+// $mograFont: "Mogra", serif;
+
+// * MEDIA QUERIES
+
+$phone: 480px;
+$tablet: 768px;
+$desktop: 1024px;
+
+// * COLORS
+
+$white: #FFFFFF;
+$danger: #842029;
+$success: #0F5132;
+
+$primary: #C864E1;
+$secondary: #FFC84B;
+$third: #6CC2E6;
+$lightGrey: #C0C0C0;
+$midGrey: #808080;
+$darkGrey: #404040;
+$black: #000000;
+$green: #3CB371;
+$red: #E14B64;
+
+$homeDarkBrown: #443A20;
+$homeLightBrown: #B6A385;
+$homeDarkBeige: #DBD2C3;
+$homeLightBeige: #F0EDE6;
+
+$menuDarkBrown: #3D2B1F;
+$menuBeige: #F5E6CA;
+$menuYellow: #F1C40F;
+$menuDarkBeige: #C09650;
+$menuMidBeige: #C8A86D;
+$menuLightBeige: #DFCEB3;
+
+// * SPACING
+
+$spacing: 1rem;
+
+// * UTILITIES
+
+$cardShadow: 0px 0.5rem 1rem 0px rgba(0, 0, 0, 0.1);
+$borderInput: 0.1rem solid #D9D9D9;

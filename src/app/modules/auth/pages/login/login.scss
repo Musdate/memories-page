@@ -1,0 +1,61 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.layout {
+    width: 27.5rem;
+
+    .input-form {
+
+        @include m.input( 100%, 4.5rem, 0rem 1.5rem, 1rem, none );
+        box-shadow: v.$cardShadow;
+
+        &::placeholder {
+            font-style: italic;
+        }
+    }
+
+    button {
+        margin: 0 0 5rem 0;
+    }
+
+    a {
+        display: block;
+        text-align: center;
+        margin: 0 0 2.5rem 0;
+        cursor: pointer;
+        color: v.$white;
+
+        &:hover {
+            color: v.$third;
+        }
+    }
+}
+
+.remember-container {
+    display: flex;
+    margin: 0rem 0.5rem 5rem 0rem;
+    width: fit-content;
+
+    input, label {
+        cursor: pointer;
+    }
+
+    @include m.desktop {
+
+        &:hover {
+            color: v.$third;
+        }
+    }
+}
+
+.email {
+    margin: 0rem 0rem 5rem 0rem;
+}
+
+.password {
+    margin: 0rem 0rem 2rem 0rem;
+}
+
+.form-remember {
+    @include m.checkbox-primary;
+}

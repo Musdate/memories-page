@@ -1,0 +1,29 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.layout {
+    width: 27.5rem;
+
+    input {
+
+        @include m.input( 100%, 4.5rem, 0rem 1.5rem, 1rem , none );
+
+        margin: 0rem 0rem 5rem 0rem;
+
+        &::placeholder {
+            font-style: italic;
+        }
+    }
+
+    a {
+        display: block;
+        text-align: center;
+        margin: 5rem 0rem 2.5rem 0rem;
+        cursor: pointer;
+        color: v.$white;
+
+        &:hover {
+            color: v.$third;
+        }
+    }
+}

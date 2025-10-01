@@ -1,0 +1,44 @@
+@if ( isLoading() || isLoadingPets() ) {
+    <app-loading />
+}
+
+<div class="walks-container">
+
+    <div class="walks-buttons-container">
+
+        <button (click)="addPet()" class="btn add-pet-btn">
+            <div> Agregar Mascota </div>
+            <svg plus-icon></svg>
+        </button>
+
+        <button (click)="toggleArchivePets()" class="btn archived-pet-btn">
+            <div> Mascotas Archivadas </div>
+            <svg archive-icon></svg>
+        </button>
+
+        <input class="walks-search-input" type="text" [formControl]="searchControl" placeholder="Buscar mascota..." />
+
+    </div>
+
+    <div class="walks-card-container">
+
+        @if ( allPets.length === 0 ) {
+            <div style="margin: 20px 0 20px 0"> Aun no tienes mascotas para pasear </div>
+            <div> Agrega una !! </div>
+        }
+        @else {
+
+            @for ( pet of filteredPets(); track pet._id ) {
+
+                <a [routerLink]="['/landing/walk-info', pet._id]" class="walk-card">
+                    <div class="walk-card-name"> {{ pet.name }} </div>
+                    <div class="walk-card-comment"> {{ pet.comment }} </div>
+                </a>
+
+            }
+
+        }
+
+    </div>
+
+</div>

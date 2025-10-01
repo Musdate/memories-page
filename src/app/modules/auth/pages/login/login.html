@@ -1,0 +1,36 @@
+@if ( isLoading() ) {
+    <app-loading />
+}
+
+<div class="container layout">
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+        <input id="email"
+               class="input-form email"
+               type="email"
+               formControlName="email"
+               placeholder="Email">
+
+        <input id="password"
+               class="input-form password"
+               type="password"
+               formControlName="password"
+               placeholder="Contraseña">
+
+        <div class="remember-container">
+            <input id="rememberMe"
+                   class="form-remember"
+                   type="checkbox"
+                   formControlName="rememberMe">
+            <label for="rememberMe"> Recuerdame </label>
+        </div>
+
+        <button type="submit" class="primary-btn" [disabled]="loginForm.invalid"> INGRESAR </button>
+
+        <a [routerLink]="['/reset-password']"> Olvidé mi contraseña </a>
+        <a [routerLink]="['/auth/register']"> Crear Cuenta </a>
+
+    </form>
+
+</div>

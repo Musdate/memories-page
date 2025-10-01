@@ -1,0 +1,125 @@
+@if ( isLoading() ) {
+    <app-loading />
+}
+
+<div class="container direction-column walks-info-container">
+
+    <section class="pet-info">
+
+        <div class="pet-field-editable">
+            <div class="pet-name"> {{ pet.name }} </div>
+            <svg edit-icon (click)="onEditPetName()"></svg>
+        </div>
+        <div class="pet-field-editable">
+            <div class="pet-comment"> {{ pet.comment }} </div>
+            <svg edit-icon (click)="onEditPetComment()"></svg>
+        </div>
+
+        <div class="pet-buttons-container">
+            <button (click)="onNewActivity()" class="btn primary-btn-color hover-btn" >
+                <svg walks-icon></svg>
+            </button>
+            <button (click)="onDownloadPdf()" class="btn secondary-btn hover-btn" >
+                <svg pdf-icon></svg>
+            </button>
+            <button (click)="onArchivePet()" class="btn disabled-btn hover-btn" >
+                <svg archive-icon></svg>
+            </button>
+            <button (click)="onDeletePet()" class="btn danger-btn hover-btn" >
+                <svg delete-icon></svg>
+            </button>
+        </div>
+
+    </section>
+
+    <section class="pet-walks-price-container">
+
+        <div class="pet-walks-price-title"> Precios </div>
+
+        <form [formGroup]="pricesForm" (ngSubmit)="onUpdatePet( { activityPrices: pricesForm.value } ) " class="pet-walks-price-form">
+
+            <div class="pet-walks-price-fields-container">
+
+                <div>
+
+                    <div> Paseos </div>
+
+                    <label for="paseoDiarioPrice"> diario </label>
+                    <input id="paseoDiarioPrice"
+                           formControlName="dailyWalkPrice"
+                           type="number"
+                           min="0" step="1"
+                           placeholder="0">
+
+                    <label for="paseoSemanalPrice"> semanal </label>
+                    <input id="paseoSemanalPrice"
+                           formControlName="weeklyWalkPrice"
+                           type="number"
+                           min="0" step="1"
+                           placeholder="0">
+
+                </div>
+
+                <div>
+
+                    <div> Guardería </div>
+
+                    <label for="guarderiaPrice"> diario </label>
+                    <input id="guarderiaPrice"
+                           formControlName="dailyGuarderiaPrice"
+                           type="number"
+                           min="0" step="1"
+                           placeholder="0">
+
+                </div>
+
+                <div>
+
+                    <div> Cuidados </div>
+
+                    <label for="cuidadosPrice"> diario </label>
+                    <input id="cuidadosPrice"
+                           formControlName="dailyCuidadoPrice"
+                           type="number"
+                           min="0" step="1"
+                           placeholder="0">
+
+                </div>
+
+            </div>
+
+            <button type="submit" class="primary-btn"> Guardar </button>
+
+        </form>
+
+    </section>
+
+    <ag-grid-angular
+        class="pet-walks-grid"
+        (cellEditingStarted)="onCellEditingStarted($event)"
+        (rowValueChanged)="onRowValueChanged($event)"
+        (gridReady)="onGridReady($event)"
+        (selectionChanged)="onSelectionChanged()"
+        [gridOptions]="gridOptions"
+        [rowData]="activityData()"
+        [columnDefs]="activityColumns" />
+
+    @if ( hasSelectedRows() ) {
+
+        <section class="activity-buttons-container">
+            <button (click)="onPayActivities()" class="btn success-btn hover-btn" >
+                <svg dollar-icon></svg>
+            </button>
+            <button (click)="onDeleteActivities()" class="btn danger-btn hover-btn" >
+                <svg delete-icon></svg>
+            </button>
+        </section>
+
+    }
+
+    <section class="pet-price-summary">
+        <div> Pendiente: {{ ( pet.priceSummary.pending || 0 ) | currency }}</div>
+        <div> Total: {{ ( pet.priceSummary.total || 0 ) | currency }}</div>
+    </section>
+
+</div>

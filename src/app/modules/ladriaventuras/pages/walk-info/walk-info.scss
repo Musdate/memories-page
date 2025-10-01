@@ -1,0 +1,134 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.walks-info-container {
+    gap: 3rem;
+    margin: 3rem 0rem;
+}
+.pet-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: v.$spacing;
+    width: 100%;
+    padding: 2rem 1rem;
+    background-color: white
+}
+
+.pet-field-editable {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing;
+
+    div {
+        max-width: 26.6rem;
+        min-height: 2.5rem;
+        line-height: 2.5rem;
+        text-align: center;
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    svg {
+        cursor: pointer;
+
+        &:hover {
+            color: v.$secondary;
+        }
+    }
+}
+
+.pet-walks-price-container {
+    display: flex;
+    width: 100%;
+    padding: 2rem 1rem;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    gap: v.$spacing;
+
+    button {
+        width: 20rem;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: v.$spacing;
+    }
+}
+
+.pet-name {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.pet-comment {
+    color: v.$midGrey;
+}
+
+.pet-walks-price-fields-container {
+    display: flex;
+    gap: 2rem;
+
+    div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    input {
+        @include m.input(7.5rem, 2.5rem, 0rem 1rem, 0.5rem, v.$borderInput);
+        text-align: right;
+    }
+
+    label {
+        margin: v.$spacing 0rem 0rem 0rem;
+        color: v.$midGrey;
+    }
+
+}
+
+.pet-walks-price-title {
+    font-size: 2.5rem;
+}
+
+.pet-walks-price-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.pet-buttons-container {
+    display: flex;
+    gap: v.$spacing;
+}
+
+.activity-buttons-container {
+    display: flex;
+    gap: v.$spacing;
+    justify-content: flex-end;
+    padding: 0rem 2rem;
+    width: 100%;
+}
+
+.pet-price-summary {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: v.$spacing;
+    width: 100%;
+    padding: 2rem;
+    background-color: v.$white;
+
+}
+
+.btn {
+    height: 2.4rem;
+    width: 2.4rem;
+}
+
+.pet-walks-grid {
+    width: 100%;
+    height: 51.2rem;
+    padding: 0rem 2rem;
+}

@@ -1,0 +1,79 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+.walks-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 3rem;
+    margin: 3rem 0rem;
+}
+
+.walks-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: v.$spacing;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.walks-search-input {
+    @include m.input( 22rem, 5rem, 0px 1rem, 1rem, v.$borderInput );
+}
+
+.walks-card-container {
+    @include m.grid( 35rem, v.$spacing );
+    width: 100%;
+    padding: 0rem 1rem;
+
+    @include m.tablet {
+        gap: 2rem;
+        padding: 0rem 2rem;
+    }
+}
+
+.walk-card {
+    background-color: v.$white;
+    color: v.$black;
+    border-radius: 0.7rem;
+    height: 10rem;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.walk-card-name {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 1rem;
+    text-align: center;
+}
+
+.walk-card-comment {
+    color: v.$midGrey;
+    padding: 0px v.$spacing;
+    text-align: center;
+}
+
+.add-pet-btn {
+    min-width: 20rem;
+
+    &:hover {
+        color: v.$green;
+    }
+}
+
+.archived-pet-btn {
+    min-width: 20rem;
+
+    &:hover {
+        color: v.$third;
+    }
+}
+
+.price-btn {
+
+    &:hover {
+        color: v.$secondary;
+    }
+}

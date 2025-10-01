@@ -1,0 +1,33 @@
+@if ( isLoading() ) {
+    <app-loading />
+}
+
+<div class="container layout">
+
+    <form [formGroup]="userForm" (ngSubmit)="onRegister()">
+
+        <input  class="input"
+                [ngClass]="{ 'error-input': hasErrors( 'name' ) }"
+                type="text"
+                formControlName="name"
+                placeholder="Nombre">
+
+        <input  class="input"
+                [ngClass]="{ 'error-input': hasErrors( 'email' ) }"
+                type="email"
+                formControlName="email"
+                placeholder="Email">
+
+        <input  class="input"
+                [ngClass]="{ 'error-input': hasErrors( 'password' ) }"
+                type="password"
+                formControlName="password"
+                placeholder="Contraseña">
+
+        <button type="submit" class="primary-btn"> REGISTRAR </button>
+
+        <a [routerLink]="['/auth/login']"> Ingresar </a>
+
+    </form>
+
+</div>

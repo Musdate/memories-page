@@ -1,0 +1,17 @@
+export { CheckIcon } from "./check-icon.component";
+export { ClickIcon } from "./click-icon.component";
+export { CloseIcon } from "./close-icon.component";
+export { DeleteIcon } from "./delete-icon.component";
+export { DollarIcon } from "./dollar-icon.component";
+export { EditIcon } from "./edit-icon.component";
+export { HomeIcon } from "./home-icon.component";
+export { LogoutIcon } from "./logout-icon.component";
+export { MangasIcon } from "./mangas-icon.component";
+export { MenuIcon } from "./menu-icon.component";
+export { MoviesIcon } from "./movies-icon.component";
+export { PdfIcon } from "./pdf-icon.component";
+export { PlusIcon } from "./plus-icon.component";
+export { RecipesIcon } from "./recipes-icon.component";
+export { SettingsIcon } from "./settings-icon.component";
+export { WalksIcon } from "./walks-icon.component";
+export { ArchiveIcon } from "./archive-icon.component";

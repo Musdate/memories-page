@@ -1,0 +1,71 @@
+<nav class="navbar" aria-label="Barra de navegación.">
+
+    <div class="left-navbar">
+
+        <a [routerLink]="['/landing']" class="logo-item">
+            <img src="/assets/LogoMemories_100x100.png" alt="Logo Memories" width="50" height="50">
+            <div> Memories </div>
+        </a>
+
+        <a class="nav-item"> Hogar </a>
+        <a class="nav-item"> Peliculas </a>
+
+        <a [routerLink]="['walks']" routerLinkActive="active-link" class="nav-item">
+            Paseos
+        </a>
+
+    </div>
+
+    <div class="right-navbar">
+        <a [routerLink]="['settings']" routerLinkActive="active-link" class="nav-item">
+            <svg settings-icon></svg>
+            <div> {{ userName }} </div>
+        </a>
+        <div class="separation-item nav-item"></div>
+        <svg logout-icon (click)="onLogout()" class="nav-item"></svg>
+    </div>
+
+    <span onKeyPress (click)="toggleSidebar()" class="menu-logo">
+        <svg menu-icon></svg>
+    </span>
+
+</nav>
+
+@if ( showSidebar ) {
+
+    <div onKeyPress class="overlay" (click)="toggleSidebar()"></div>
+
+    <nav class="sidebar" aria-label="Menu lateral.">
+
+        <span onKeyPress (click)="toggleSidebar()" class="close-sidebar">
+            <svg close-icon></svg>
+        </span>
+
+        <a>
+            <svg home-icon></svg>
+            <div> Hogar </div>
+        </a>
+
+        <a>
+            <svg movies-icon></svg>
+            <div>  Películas </div>
+        </a>
+
+        <a [routerLink]="['walks']" routerLinkActive="active-link" (click)="toggleSidebar()">
+            <svg walks-icon></svg>
+            <div> Paseos </div>
+        </a>
+
+        <a [routerLink]="['settings']" routerLinkActive="active-link" class="config" (click)="toggleSidebar()">
+            <svg settings-icon></svg>
+            <div> {{ userName }} </div>
+        </a>
+
+        <span onKeyPress (click)="onLogout(); toggleSidebar()">
+            <svg logout-icon></svg>
+            <div> Cerrar Sesión </div>
+        </span>
+
+    </nav>
+
+}

@@ -1,0 +1,70 @@
+<div class="settings-title container">
+
+    <form [formGroup]="userForm" (ngSubmit)="onSaveSettings()">
+
+        <fieldset class="input-section-container">
+
+            <div class="title"> Cuenta </div>
+
+            <div class="input-section">
+                <label for="settings-name"> Username </label>
+                <input id="settings-name"
+                       type="text"
+                       formControlName="name"
+                       [ngClass]="{ 'error-input': hasErrors( 'name' ) }"
+                       placeholder="Nombre del usuario">
+            </div>
+
+            <div class="input-section">
+                <label for="settings-email"> Email </label>
+                <input id="settings-email"
+                       type="text"
+                       formControlName="email"
+                       placeholder="Correo electronico">
+            </div>
+
+        </fieldset>
+
+        @if( banks.length > 0 ) {
+
+            <fieldset>
+
+                <div formArrayName="banks" class="input-section-container">
+
+                    <div class="title"> Paseos </div>
+
+                    @for ( bank of banks.controls; track bank; let index = $index ) {
+
+                        <div [formGroupName]="index">
+
+                            <div class="input-section">
+                                <label for="settings-bname"> {{ bank.get('name')?.value }} </label>
+                                <input id="settings-bname"
+                                       formControlName="number"
+                                       type="text"
+                                       placeholder="Numero de cuenta">
+                            </div>
+
+                        </div>
+
+                    }
+
+                </div>
+
+            </fieldset>
+
+        }
+
+        @else {
+
+            <div class="no-banks-message" (click)="onAddBank()">
+                Agregar cuentas bancarias
+            </div>
+
+        }
+
+        <button type="submit" class="primary-btn"> Guardar </button>
+
+    </form>
+
+</div>

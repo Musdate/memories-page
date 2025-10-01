@@ -1,0 +1,196 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+@import 'normalize.css';
+
+// * CUSTOM NORMALIZE
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: v.$font;
+    font-size: 1.6rem;
+    background-color: #E3E6E6;
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
+p {
+    font-size: 2rem;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    font-size: italic;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1, h2, h3 {
+    margin: 0 0 v.$spacing 0;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+
+input[type="number"] {
+  appearance: none;
+  -moz-appearance: textfield;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+  }
+}
+
+// * UTILITIES
+
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 150rem;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.direction-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.content-page {
+    padding: 7rem 0rem 0rem 0rem;
+
+    > * {
+        width: 100%;
+    }
+
+    router-outlet {
+        width: unset;
+    }
+}
+
+// * CUSTOM STYLES
+
+.error-input {
+    outline: 2px solid v.$danger;
+}
+
+.danger-color {
+    color: v.$danger;
+}
+
+.success-color {
+    color: v.$success;
+}
+
+// * ANIMATIONS
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes jelly-42 {
+    from {
+        transform: scale(1, 1);
+    }
+    30% {
+        transform: scale(1.25, 0.75);
+    }
+    40% {
+        transform: scale(0.75, 1.25);
+    }
+    50% {
+        transform: scale(1.15, 0.85);
+    }
+    65% {
+        transform: scale(0.95, 1.05);
+    }
+    75% {
+        transform: scale(1.05, 0.95);
+    }
+    to {
+        transform: scale(1, 1);
+    }
+}
+
+// BUTTONS
+
+.btn {
+    all: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2.5rem;
+    height: 3rem;
+    color: v.$darkGrey;
+    padding: 1rem;
+    background-color: v.$white;
+    cursor: pointer;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+
+    div {
+        margin: 0px 0.5rem;
+    }
+}
+
+.primary-btn {
+    @include m.primary-btn;
+}
+
+.hover-btn {
+
+    @include m.desktop {
+
+        &:hover {
+            background-color: #EEEEEE;
+        }
+    }
+}
+
+.danger-btn {
+    color: v.$red;
+}
+
+.success-btn {
+    color: v.$green;
+}
+
+.warn-btn {
+    color: v.$secondary;
+}
+
+.primary-btn-color {
+    color: v.$third;
+}
+
+.secondary-btn {
+    color: v.$primary;
+}
+
+.disabled-btn {
+    color: v.$lightGrey;
+}
