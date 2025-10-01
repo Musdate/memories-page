@@ -7,11 +7,11 @@
     <section class="pet-info">
 
         <div class="pet-field-editable">
-            <div class="pet-name"> {{ pet.name }} </div>
+            <div class="pet-name" [ngClass]="{ 'pet-placeholder': !pet.name }"> {{ pet.name || 'Nombre' }} </div>
             <svg edit-icon (click)="onEditPetName()"></svg>
         </div>
         <div class="pet-field-editable">
-            <div class="pet-comment"> {{ pet.comment }} </div>
+            <div class="pet-comment" [ngClass]="{ 'pet-placeholder': !pet.comment }"> {{ pet.comment || 'Comentario' }} </div>
             <svg edit-icon (click)="onEditPetComment()"></svg>
         </div>
 

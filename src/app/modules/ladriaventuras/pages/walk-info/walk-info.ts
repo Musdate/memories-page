@@ -6,7 +6,7 @@ import { WalksService } from '@ladriaventuras/services/walks.service';
 import { GRID_THEME, GRID_LOCALE, GRID_EDIT_TYPE } from '@shared/grid-config';
 import { ColDef, GridReadyEvent } from 'ag-grid-community';
 import { AgGridAngular } from 'ag-grid-angular';
-import { CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ArchiveIcon, DeleteIcon, DollarIcon, EditIcon, PdfIcon, WalksIcon } from '@shared/icons';
 import { parse, isValid, format } from 'date-fns';
 import { GridApi } from 'ag-grid-community';
@@ -30,7 +30,8 @@ import { Loading } from '@shared/components/loading/loading';
     PdfIcon,
     ArchiveIcon,
     DollarIcon,
-    Loading
+    Loading,
+    CommonModule
   ],
   templateUrl: './walk-info.html',
   styleUrl: './walk-info.scss'

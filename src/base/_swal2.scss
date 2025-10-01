@@ -121,3 +121,9 @@
 .archived-pets-container label:has(.archived-checkbox:checked) {
   color: v.$third;
 }
+
+.no-archived-text {
+    color: v.$midGrey;
+    width: 100%;
+    text-align: center;
+}

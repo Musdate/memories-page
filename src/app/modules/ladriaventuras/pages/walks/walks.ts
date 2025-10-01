@@ -142,24 +142,37 @@ export default class Walks {
       next: ( archivedPets ) => {
         this.archivedPets = archivedPets;
         Swal.hideLoading();
-        Swal.update({
-          html: `
-            <div class="archived-pets-container">
-              ${ archivedPets.map( pet => `
-                <label>
-                  <input type="checkbox" class="archived-checkbox" value="${pet._id}">
-                  ${pet.name}
-                </label>
-              `).join('') }
-            </div>
-          `,
-          showConfirmButton: true,
-          confirmButtonText: "Desarchivar",
-          preConfirm: () => {
-            const checked = Array.from( document.querySelectorAll('.archived-checkbox:checked') ) as HTMLInputElement[];
-            return checked.map( cb => cb.value );
-          }
-        });
+
+        if ( archivedPets.length === 0 ) {
+
+          Swal.update({
+            html: `<div class="no-archived-text"> No hay mascotas archivadas. </div>`,
+            showConfirmButton: true
+          });
+
+        } else {
+
+          Swal.update({
+            html: `
+              <div class="archived-pets-container">
+                ${ archivedPets.map( pet => `
+                  <label>
+                    <input type="checkbox" class="archived-checkbox" value="${pet._id}">
+                    ${pet.name}
+                  </label>
+                `).join('') }
+              </div>
+            `,
+            showConfirmButton: true,
+            confirmButtonText: "Desarchivar",
+            preConfirm: () => {
+              const checked = Array.from( document.querySelectorAll('.archived-checkbox:checked') ) as HTMLInputElement[];
+              return checked.map( cb => cb.value );
+            }
+          });
+
+        }
+
       },
       error: () => {
         Swal.hideLoading();

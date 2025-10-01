@@ -23,8 +23,12 @@
     <div class="walks-card-container">
 
         @if ( allPets.length === 0 ) {
-            <div style="margin: 20px 0 20px 0"> Aun no tienes mascotas para pasear </div>
-            <div> Agrega una !! </div>
+
+            <div class="no-pets-container">
+                <div> Aun no tienes mascotas para pasear </div>
+                <div> agrega una !! </div>
+            </div>
+
         }
         @else {
 
