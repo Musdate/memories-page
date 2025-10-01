@@ -59,6 +59,7 @@ export default class WalkInfo {
     localeText: GRID_LOCALE,
     theme: GRID_THEME,
     pagination: true,
+    stopEditingWhenCellsLoseFocus: true,
     rowSelection: {
       mode: "multiRow",
       checkboxes: true

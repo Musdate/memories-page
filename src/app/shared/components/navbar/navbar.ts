@@ -33,8 +33,8 @@ export class Navbar {
   }
 
   public onLogout() {
-    this.router.navigateByUrl( ROUTES.login );
     this.authService.logout();
+    this.router.navigateByUrl( ROUTES.login );
   }
 
   public toggleSidebar() {
