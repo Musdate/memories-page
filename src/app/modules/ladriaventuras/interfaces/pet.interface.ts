@@ -29,6 +29,7 @@ export interface PriceSummary {
 
 export interface ActivityPrices {
     dailyWalkPrice      : number;
+    promoWalkPrice      : number;
     weeklyWalkPrice     : number;
     dailyGuarderiaPrice : number;
     dailyCuidadoPrice   : number;

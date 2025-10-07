@@ -4,7 +4,7 @@ import { AlertService } from '@core/services/alerts.service';
 import { ActivityPrices, ActivityType, Pet, PetActivities, UpdateActivityDto } from '@ladriaventuras/interfaces';
 import { WalksService } from '@ladriaventuras/services/walks.service';
 import { GRID_THEME, GRID_LOCALE, GRID_EDIT_TYPE } from '@shared/grid-config';
-import { ColDef, GridReadyEvent } from 'ag-grid-community';
+import { ColDef, GridReadyEvent, RowClassParams } from 'ag-grid-community';
 import { AgGridAngular } from 'ag-grid-angular';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ArchiveIcon, DeleteIcon, DollarIcon, EditIcon, PdfIcon, WalksIcon } from '@shared/icons';
@@ -64,11 +64,15 @@ export default class WalkInfo {
     rowSelection: {
       mode: "multiRow",
       checkboxes: true
-    } as RowSelectionOptions
+    } as RowSelectionOptions,
+    getRowClass: ( params: RowClassParams ) => {
+      return params.data && params.data.paid === false ? 'row-pending' : '';
+    },
   };
 
   public pricesForm: FormGroup = this.fb.group({
     dailyWalkPrice:      [ 0, [ Validators.min(0) ] ],
+    promoWalkPrice:      [ 0, [ Validators.min(0) ] ],
     weeklyWalkPrice:     [ 0, [ Validators.min(0) ] ],
     dailyGuarderiaPrice: [ 0, [ Validators.min(0) ] ],
     dailyCuidadoPrice:   [ 0, [ Validators.min(0) ] ]
@@ -81,7 +85,7 @@ export default class WalkInfo {
     comment        : '',
     activity       : [],
     priceSummary   : { total: 0, pending: 0 },
-    activityPrices : { dailyWalkPrice: 0, weeklyWalkPrice: 0, dailyGuarderiaPrice: 0, dailyCuidadoPrice: 0 },
+    activityPrices : { dailyWalkPrice: 0, promoWalkPrice: 0, weeklyWalkPrice: 0, dailyGuarderiaPrice: 0, dailyCuidadoPrice: 0 },
   };
 
   public activityColumns: ColDef[] = [
@@ -456,6 +460,7 @@ export default class WalkInfo {
 
     this.pricesForm.patchValue({
       dailyWalkPrice: this.pet.activityPrices?.dailyWalkPrice,
+      promoWalkPrice: this.pet.activityPrices?.promoWalkPrice,
       weeklyWalkPrice: this.pet.activityPrices?.weeklyWalkPrice,
       dailyGuarderiaPrice: this.pet.activityPrices?.dailyGuarderiaPrice,
       dailyCuidadoPrice: this.pet.activityPrices?.dailyCuidadoPrice
