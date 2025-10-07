@@ -1,7 +1,7 @@
 import { CurrencyPipe } from "@angular/common";
 import { format } from "date-fns";
 import { es } from 'date-fns/locale/es';
-import { Pet } from "@ladriaventuras/interfaces";
+import { Pet, PetActivities } from "@ladriaventuras/interfaces";
 import { User } from "@auth/interfaces/user.interface";
 import { LogoLadriaventuras } from "src/assets/LogoLadriaventuras";
 import pdfMake from "pdfmake/build/pdfmake";
@@ -9,7 +9,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 
 (pdfMake as any).vfs = pdfFonts.vfs;
 
-const generatePDF = ( pet: Pet, user: User | null ) => {
+const generatePDF = ( pet: Omit<Pet, 'activity'>, activities: PetActivities[], user: User | null ) => {
 
     const userName = user?.name;
     const bColombia = user?.banks.find(( bank ) => bank.name === 'Bancolombia' )?.number;
@@ -26,7 +26,7 @@ const generatePDF = ( pet: Pet, user: User | null ) => {
             { text: "Tipo", style: "tableHeader" },
             { text: "Estado", style: "tableHeader" },
         ],
-        ...pet.activity.filter(( activity ) => !activity.paid ).map(( activity ) => [ activity.date, activity.activityType, 'Pendiente' ]),
+        ...activities.filter(( activity ) => !activity.paid ).map(( activity ) => [ activity.date, activity.activityType, 'Pendiente' ]),
     ];
 
     const totalPending = pet.priceSummary?.pending || 0;

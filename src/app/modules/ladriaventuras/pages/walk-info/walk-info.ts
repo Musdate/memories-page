@@ -273,7 +273,19 @@ export default class WalkInfo {
   }
 
   public onDownloadPdf() {
-    generatePDF( this.pet, this.authService.user() );
+
+    const selectedActivities = this.gridApi.getSelectedRows() as PetActivities[];
+    const { activity, ...petSinActivities } = this.pet;
+    const finalActivities = selectedActivities.length ? selectedActivities : activity;
+
+    const sortedActivities = finalActivities.slice().sort((a, b) => {
+      const dateA = parse( a.date, 'dd-MM-yyyy', new Date() );
+      const dateB = parse( b.date, 'dd-MM-yyyy', new Date() );
+      return dateA.getTime() - dateB.getTime();
+    });
+
+    generatePDF( petSinActivities, sortedActivities, this.authService.user() );
+
   }
 
   public onArchivePet() {
