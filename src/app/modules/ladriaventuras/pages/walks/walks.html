@@ -34,10 +34,15 @@
 
             @for ( pet of filteredPets(); track pet._id ) {
 
-                <a [routerLink]="['/landing/walk-info', pet._id]" class="walk-card">
-                    <div class="walk-card-name"> {{ pet.name }} </div>
-                    <div class="walk-card-comment"> {{ pet.comment }} </div>
-                </a>
+                <div class="walk-card">
+                    <a [routerLink]="['/landing/walk-info', pet._id]">
+                        <div class="walk-card-name"> {{ pet.name }} </div>
+                        <div class="walk-card-comment"> {{ pet.comment }} </div>
+                    </a>
+                    <div (click)="onNewActivity( pet )" class="walk-card-icon-container primary-btn-color">
+                         <svg walks-icon></svg>
+                    </div>
+                </div>
 
             }
 

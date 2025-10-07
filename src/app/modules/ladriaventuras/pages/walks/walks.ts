@@ -1,13 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
-import { CreatePetDto, Pet } from '../../interfaces';
+import { ActivityType, CreatePetDto, Pet, PetActivities } from '../../interfaces';
 import { AlertService } from '@core/services/alerts.service';
 import { Loading } from '@shared/components/loading/loading';
 import { RouterModule } from '@angular/router';
 import { WalksService } from '@ladriaventuras/services/walks.service';
-import { ArchiveIcon, PlusIcon } from '@shared/icons';
+import { ArchiveIcon, PlusIcon, WalksIcon } from '@shared/icons';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-walks',
@@ -16,7 +17,8 @@ import Swal from 'sweetalert2';
     RouterModule,
     PlusIcon,
     ArchiveIcon,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    WalksIcon
   ],
   templateUrl: './walks.html',
   styleUrl: './walks.scss'
@@ -211,6 +213,41 @@ export default class Walks {
       return this.filteredPets();
 
     }
+
+  }
+
+  public onNewActivity( pet: Pet ) {
+
+    const todayDate = format( new Date(), 'dd-MM-yyyy' );
+    const existDate = pet.activity.some( a => a.date === todayDate );
+
+    const nuevaActividad: PetActivities = {
+      date: todayDate,
+      activityType: ActivityType.Paseo,
+      paid: false,
+      note: ''
+    };
+
+    if ( existDate ) {
+      this.alertService.showError({ text: `Ya has paseado a ${ pet.name } hoy.`, timer: 2000 });
+      return;
+    }
+
+    this.isLoading.set(true);
+
+    this.walksService.addPetActivity( pet._id, nuevaActividad ).subscribe({
+      next: ( updatedPet ) => {
+        pet.activity = updatedPet.activity;
+        this.alertService.showSuccess({ text: `Has paseado a ${ pet.name }!!`, timer: 2000 });
+      },
+      error: ( message ) => {
+        this.alertService.showError({ text: message.error.message || 'Error.', timer: 2000 });
+        this.isLoading.set( false );
+      },
+      complete: () => {
+        this.isLoading.set( false );
+      }
+    });
 
   }
 

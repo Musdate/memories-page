@@ -42,12 +42,38 @@
 }
 
 .walk-card {
+    display: flex;
     background-color: v.$white;
     color: v.$black;
     border-radius: 0.7rem;
     height: 10rem;
-    cursor: pointer;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+
+    a {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+}
+
+.walk-card-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+    padding: v.$spacing;
+    border-radius: 0rem 0.7rem 0.7rem 0rem;
+    background-color: #EAF6FB;
+
+    &:hover {
+        background-color: v.$third;
+        color: v.$white;
+    }
 }
 
 .walk-card-name {
