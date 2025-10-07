@@ -102,7 +102,8 @@
         (selectionChanged)="onSelectionChanged()"
         [gridOptions]="gridOptions"
         [rowData]="activityData()"
-        [columnDefs]="activityColumns" />
+        [columnDefs]="activityColumns">
+    </ag-grid-angular>
 
     @if ( hasSelectedRows() ) {
 
@@ -118,8 +119,8 @@
     }
 
     <section class="pet-price-summary">
-        <div> Pendiente: {{ ( pet.priceSummary.pending || 0 ) | currency }}</div>
-        <div> Total: {{ ( pet.priceSummary.total || 0 ) | currency }}</div>
+        <div> Pendiente: {{ ( pet.priceSummary?.pending || 0 ) | currency }}</div>
+        <div> Total: {{ ( pet.priceSummary?.total || 0 ) | currency }}</div>
     </section>
 
 </div>

@@ -29,7 +29,7 @@ const generatePDF = ( pet: Pet, user: User | null ) => {
         ...pet.activity.filter(( activity ) => !activity.paid ).map(( activity ) => [ activity.date, activity.activityType, 'Pendiente' ]),
     ];
 
-    const totalPending = pet.priceSummary.pending;
+    const totalPending = pet.priceSummary?.pending || 0;
 
     const content: any[] = [];
 

@@ -4,7 +4,7 @@ export interface Pet {
     name           : string;
     comment        : string;
     activity       : PetActivities[];
-    priceSummary   : PriceSummary;
+    priceSummary?   : PriceSummary;
     activityPrices : ActivityPrices;
 }
 

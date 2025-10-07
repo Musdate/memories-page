@@ -48,7 +48,7 @@ export default class WalkInfo {
   public petId: string = this.activedRoute.snapshot.params['id'];
   public isLoading = signal( false );
   public activityData = signal<PetActivities[]>([]);
-  public hasSelectedRows = signal(false);
+  public hasSelectedRows = signal( false );
   public gridApi!: GridApi;
 
   private originalRow: UpdateActivityDto | null = null;
@@ -60,6 +60,7 @@ export default class WalkInfo {
     theme: GRID_THEME,
     pagination: true,
     stopEditingWhenCellsLoseFocus: true,
+    suppressDragLeaveHidesColumns: true,
     rowSelection: {
       mode: "multiRow",
       checkboxes: true
@@ -407,7 +408,7 @@ export default class WalkInfo {
   }
 
   public onCellEditingStarted( event: CellEditingStartedEvent<UpdateActivityDto> ) {
-    if (!event.data) return;
+    if ( !event.data ) return;
     this.originalRow = { ...event.data };
   }
 
@@ -454,10 +455,10 @@ export default class WalkInfo {
     this.pet = pet;
 
     this.pricesForm.patchValue({
-      dailyWalkPrice: this.pet.activityPrices.dailyWalkPrice,
-      weeklyWalkPrice: this.pet.activityPrices.weeklyWalkPrice,
-      dailyGuarderiaPrice: this.pet.activityPrices.dailyGuarderiaPrice,
-      dailyCuidadoPrice: this.pet.activityPrices.dailyCuidadoPrice
+      dailyWalkPrice: this.pet.activityPrices?.dailyWalkPrice,
+      weeklyWalkPrice: this.pet.activityPrices?.weeklyWalkPrice,
+      dailyGuarderiaPrice: this.pet.activityPrices?.dailyGuarderiaPrice,
+      dailyCuidadoPrice: this.pet.activityPrices?.dailyCuidadoPrice
     });
 
     this.originalParams = {
