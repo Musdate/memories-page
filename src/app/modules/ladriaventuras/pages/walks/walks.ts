@@ -37,8 +37,7 @@ export default class Walks {
 
     this.loadPets();
 
-    this.searchControl.valueChanges.pipe(debounceTime(300))
-    .subscribe(value => {
+    this.searchControl.valueChanges.pipe( debounceTime( 300 )).subscribe(( value ) => {
       this.filteredPets.set( this.onFilterPets( value ?? '' ));
     });
 
@@ -49,8 +48,8 @@ export default class Walks {
 
     this.walksService.findAllPets().subscribe({
       next: ( pets ) => {
-        this.allPets = pets;
-        this.filteredPets.set( pets );
+        this.allPets = pets.reverse();
+        this.filteredPets.set( this.allPets );
       },
       error: ( message ) => {
         this.alertService.showError({ text: message.error.message || 'Error.', timer: 2000 });

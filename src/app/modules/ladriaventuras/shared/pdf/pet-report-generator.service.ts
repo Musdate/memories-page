@@ -6,10 +6,11 @@ import { User } from "@auth/interfaces/user.interface";
 import { LogoLadriaventuras } from "src/assets/LogoLadriaventuras";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import { TDocumentDefinitions } from "pdfmake/interfaces";
 
 (pdfMake as any).vfs = pdfFonts.vfs;
 
-const generatePDF = ( pet: Omit<Pet, 'activity'>, activities: PetActivities[], user: User | null ) => {
+const generatePDF = ( pet: Omit<Pet, 'activity'>, activities: PetActivities[], user: User | null ): Promise<void> => {
 
     const userName = user?.name;
     const bColombia = user?.banks.find(( bank ) => bank.name === 'Bancolombia' )?.number;
@@ -135,7 +136,7 @@ const generatePDF = ( pet: Omit<Pet, 'activity'>, activities: PetActivities[], u
         },
         subheader: {
             fontSize: 12,
-            margin: [ 0, 5, 0, 5 ],
+            margin: [ 0, 5, 0, 5 ] as [number, number, number, number],
         },
         tableHeader: {
             bold: true,
@@ -148,9 +149,10 @@ const generatePDF = ( pet: Omit<Pet, 'activity'>, activities: PetActivities[], u
         },
     };
 
-    const docDefinition: any = { content, styles };
-
-    pdfMake.createPdf(docDefinition).download(`Paseos_${ pet.name }_${ formatedShortDate }.pdf`);
+    return new Promise(( resolve ) => {
+        const docDefinition: TDocumentDefinitions = { content, styles };
+        pdfMake.createPdf( docDefinition ).download( `Paseos_${ pet.name }_${ formatedShortDate }.pdf`, () => resolve() );
+    });
 
 };
 

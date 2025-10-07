@@ -272,7 +272,7 @@ export default class WalkInfo {
 
   }
 
-  public onDownloadPdf() {
+  public async onDownloadPdf() {
 
     const selectedActivities = this.gridApi.getSelectedRows() as PetActivities[];
     const { activity, ...petSinActivities } = this.pet;
@@ -284,7 +284,9 @@ export default class WalkInfo {
       return dateA.getTime() - dateB.getTime();
     });
 
-    generatePDF( petSinActivities, sortedActivities, this.authService.user() );
+    await generatePDF( petSinActivities, sortedActivities, this.authService.user() );
+
+    this.alertService.showSuccess({ text: 'PDF generado con éxito.', timer: 2000 });
 
   }
 
