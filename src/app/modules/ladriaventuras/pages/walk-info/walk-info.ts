@@ -420,11 +420,15 @@ export default class WalkInfo {
     const updatedActivity = event.data;
     if ( !updatedActivity || !this.originalRow ) return;
 
-    if ( !this.isValidDateString( updatedActivity.date )) {
+    const dateObj = parse( updatedActivity.date, 'dd-MM-yyyy', new Date() );
+
+    if ( !isValid( dateObj )) {
       this.alertService.showError({ text: 'Fecha inválida', timer: 2000 });
       this.originalRow && this.restoreRowValues(updatedActivity, this.originalRow, event.api, event.node);
       return;
     }
+
+    updatedActivity.date = format( dateObj, 'dd-MM-yyyy' );
 
     this.isLoading.set( true );
     this.walksService.updatePetActivity( this.petId, updatedActivity ).subscribe({
@@ -441,11 +445,6 @@ export default class WalkInfo {
         this.isLoading.set( false );
       }
     });
-  }
-
-  private isValidDateString( dateStr: string ): boolean {
-    const date = parse( dateStr, 'dd-MM-yyyy', new Date() );
-    return isValid( date );
   }
 
   private restoreRowValues( row: PetActivities, original: PetActivities, api: GridApi, node: IRowNode<UpdateActivityDto> ) {
