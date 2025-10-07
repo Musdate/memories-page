@@ -8,7 +8,7 @@ import { ColDef, GridReadyEvent, RowClassParams } from 'ag-grid-community';
 import { AgGridAngular } from 'ag-grid-angular';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { ArchiveIcon, DeleteIcon, DollarIcon, EditIcon, PdfIcon, WalksIcon } from '@shared/icons';
-import { parse, isValid, format } from 'date-fns';
+import { parse, isValid, format, getWeek } from 'date-fns';
 import { GridApi } from 'ag-grid-community';
 import { CellEditingStartedEvent, ICellRendererParams, IRowNode, RowValueChangedEvent, RowSelectionOptions } from 'ag-grid-community';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -240,7 +240,7 @@ export default class WalkInfo {
 
   public onNewActivity() {
 
-    const todayDate = format(new Date(), 'dd-MM-yyyy');
+    const todayDate = format( new Date(), 'dd-MM-yyyy' );
     const existDate = this.activityData().some( a => a.date === todayDate );
 
     const nuevaActividad: PetActivities = {
@@ -276,7 +276,20 @@ export default class WalkInfo {
 
     const selectedActivities = this.gridApi.getSelectedRows() as PetActivities[];
     const { activity, ...petSinActivities } = this.pet;
-    const finalActivities = selectedActivities.length ? selectedActivities : activity;
+    let finalActivities: PetActivities[] = [];
+    let pendingPrice: number = 0;
+
+    if ( selectedActivities.length ) {
+
+      finalActivities = selectedActivities;
+      pendingPrice = this.calculatePendingAmount( activity, selectedActivities, this.pet.activityPrices );
+
+    } else {
+
+      finalActivities = activity;
+      pendingPrice = this.pet.priceSummary?.pending || 0;
+
+    }
 
     const sortedActivities = finalActivities.slice().sort((a, b) => {
       const dateA = parse( a.date, 'dd-MM-yyyy', new Date() );
@@ -284,9 +297,51 @@ export default class WalkInfo {
       return dateA.getTime() - dateB.getTime();
     });
 
-    await generatePDF( petSinActivities, sortedActivities, this.authService.user() );
+    await generatePDF( petSinActivities, sortedActivities, pendingPrice, this.authService.user() );
 
     this.alertService.showSuccess({ text: 'PDF generado con éxito.', timer: 2000 });
+
+  }
+
+  private calculatePendingAmount( allActivities: PetActivities[], selected: PetActivities[], prices: ActivityPrices ): number {
+
+    let pendingPrice = 0;
+
+    const cuidado   = selected.filter( a => a.activityType === ActivityType.Guarderia && !a.paid );
+    const guarderia = selected.filter( a => a.activityType === ActivityType.Cuidado && !a.paid );
+
+    pendingPrice += cuidado.length * ( prices.dailyCuidadoPrice || 0 );
+    pendingPrice += guarderia.length * ( prices.dailyGuarderiaPrice || 0 );
+
+    const allWalks = allActivities.filter( a => a.activityType === ActivityType.Paseo && !a.paid );
+    const selectedWalks = selected.filter( a => a.activityType === ActivityType.Paseo && !a.paid );
+
+    const allWalksWeeks: {[ key: string ]: PetActivities[] } = {};
+    allWalks.forEach(( activity ) => {
+      const date = parse( activity.date, 'dd-MM-yyyy', new Date() );
+      const key = `${ date.getFullYear() }-${ getWeek( date ) }`;
+      if ( !allWalksWeeks[ key ] ) allWalksWeeks[ key ] = [];
+      allWalksWeeks[ key ].push( activity );
+    });
+
+    const selectedWalksWeeks: {[ key: string ]: PetActivities[] } = {};
+    selectedWalks.forEach(( activity ) => {
+      const date = parse( activity.date, 'dd-MM-yyyy', new Date() );
+      const key = `${ date.getFullYear() }-${ getWeek( date ) }`;
+      if ( !selectedWalksWeeks[ key ] ) selectedWalksWeeks[ key ] = [];
+      selectedWalksWeeks[ key ].push( activity );
+    });
+
+    Object.entries( selectedWalksWeeks ).forEach(([ key, weekSelected ]) => {
+      const totalCount = allWalksWeeks[ key ]?.length || 0;
+      let priceType = 'dailyWalkPrice';
+      if ( totalCount >= 5 ) priceType = 'weeklyWalkPrice';
+      else if ( totalCount >= 3 ) priceType = 'promoWalkPrice';
+      const price = prices[ priceType as keyof ActivityPrices ] || 0;
+      pendingPrice += price * weekSelected.length;
+    });
+
+    return pendingPrice;
 
   }
 

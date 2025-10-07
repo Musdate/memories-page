@@ -10,7 +10,7 @@ import { TDocumentDefinitions } from "pdfmake/interfaces";
 
 (pdfMake as any).vfs = pdfFonts.vfs;
 
-const generatePDF = ( pet: Omit<Pet, 'activity'>, activities: PetActivities[], user: User | null ): Promise<void> => {
+const generatePDF = ( pet: Omit<Pet, 'activity'>, activities: PetActivities[], pendingPrice: number, user: User | null ): Promise<void> => {
 
     const userName = user?.name;
     const bColombia = user?.banks.find(( bank ) => bank.name === 'Bancolombia' )?.number;
@@ -29,8 +29,6 @@ const generatePDF = ( pet: Omit<Pet, 'activity'>, activities: PetActivities[], u
         ],
         ...activities.filter(( activity ) => !activity.paid ).map(( activity ) => [ activity.date, activity.activityType, 'Pendiente' ]),
     ];
-
-    const totalPending = pet.priceSummary?.pending || 0;
 
     const content: any[] = [];
 
@@ -117,7 +115,7 @@ const generatePDF = ( pet: Omit<Pet, 'activity'>, activities: PetActivities[], u
             {
                 text: [
                     { text: 'Total Pendiente: ', style: "total" },
-                    { text: currencyPipe.transform( totalPending, 'USD' ) }
+                    { text: currencyPipe.transform( pendingPrice, 'USD' ) }
                 ],
                 alignment: "right",
                 margin: [ 0, 20, 0, 10 ]
