@@ -1,0 +1,1 @@
+var e={name:"\u25CF El nombre es obligatorio.",email:"\u25CF El email no es v\xE1lido.",password:"\u25CF La contrase\xF1a debe tener entre 6 y 20 caracteres."};var o={login:"/auth/login",landing:"/landing",walks:"/landing/walks"};export{e as a,o as b};

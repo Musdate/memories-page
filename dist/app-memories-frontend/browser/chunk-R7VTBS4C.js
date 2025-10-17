@@ -1,0 +1,1 @@
+import"./chunk-C6Q5SG76.js";var o=[{path:"",loadComponent:()=>import("./chunk-PG4TWRBU.js"),children:[{path:"settings",loadComponent:()=>import("./chunk-N24EHUKC.js")},{path:"walks",loadComponent:()=>import("./chunk-QQGKXTQE.js")},{path:"walk-info/:id",loadComponent:()=>import("./chunk-LGP64IR2.js")}]}],t=o;export{t as default,o as landingRoutes};
